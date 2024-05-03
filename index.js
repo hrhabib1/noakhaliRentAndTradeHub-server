@@ -32,6 +32,8 @@ const rentServices = client.db('rentHouse').collection('houses');
 
 const buySells = client.db('rentHouse').collection('oldGoods');
 
+const createAdvertisings = client.db('rentHouse').collection('advertising');
+
 app.get('/rentHouses', async(req, res) =>{
   const cursor = rentServices.find();
   const result = await cursor.toArray();
@@ -53,6 +55,19 @@ app.post('/buySell', async(req, res) =>{
 
 app.get('/buySell', async(req, res) =>{
   const cursor = buySells.find();
+  const result = await cursor.toArray();
+  res.send(result);
+})
+
+// advertising
+app.post('/createAdvertisings', async(req, res) =>{
+  const createAdvertising = req.body;
+  console.log(createAdvertising);
+  const result = await createAdvertisings.insertOne(createAdvertising);
+  res.send(result);
+})
+app.get('/createAdvertisings', async(req, res) =>{
+  const cursor = createAdvertisings.find();
   const result = await cursor.toArray();
   res.send(result);
 })
