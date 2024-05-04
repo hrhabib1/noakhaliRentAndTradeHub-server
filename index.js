@@ -30,6 +30,7 @@ async function run() {
 
 const rentServices = client.db('rentHouse').collection('houses');
 const bookingCollection = client.db('rentHouse').collection('bookings');
+const orderCollection = client.db('rentHouse').collection('orders');
 const buySells = client.db('rentHouse').collection('oldGoods');
 
 const createAdvertisings = client.db('rentHouse').collection('advertising');
@@ -76,6 +77,25 @@ app.post('/bookings', async(req, res) =>{
   const result = await bookingCollection.insertOne(addBooking);
   res.send(result);
 })
+// order part
+app.get('/buySell/:id', async(req, res) =>{
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) }
+  const options = {
+      projection: {title: 1, image: 1,  location: 1, price: 1},
+  };
+
+  const result = await buySells.findOne(query, options);
+  res.send(result);
+})
+// booking
+app.post('/orders', async(req, res) =>{
+  const addOrder = req.body;
+  console.log(addOrder);
+  const result = await orderCollection.insertOne(addOrder);
+  res.send(result);
+})
+
 
 // advertising
 app.post('/createAdvertisings', async(req, res) =>{
