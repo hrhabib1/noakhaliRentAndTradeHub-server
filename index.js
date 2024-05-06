@@ -70,6 +70,28 @@ app.get('/rentHouses/:id', async(req, res) =>{
   const result = await rentServices.findOne(query, options);
   res.send(result);
 })
+// rent house post controle
+app.patch('/rentHouses/:id', async(req, res)=> {
+  const id = req.params.id;
+  const filter = {_id: new ObjectId(id)};
+  const updatedPost = req.body;
+  console.log(updatedPost);
+  const updateDoc = {
+    $set: {
+      status: updatedPost.status
+    },
+  };
+  const result = await rentServices.updateOne(filter, updateDoc);
+  res.send(result);
+})
+app.delete('/rentHouses/:id', async(req, res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await rentServices.deleteOne(query);
+  res.send(result);
+})
+// buy sell post control
+
 // booking
 app.post('/bookings', async(req, res) =>{
   const addBooking = req.body;
