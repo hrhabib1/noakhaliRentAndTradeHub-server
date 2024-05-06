@@ -91,7 +91,25 @@ app.delete('/rentHouses/:id', async(req, res) =>{
   res.send(result);
 })
 // buy sell post control
-
+app.patch('/buySell/:id', async(req, res)=> {
+  const id = req.params.id;
+  const filter = {_id: new ObjectId(id)};
+  const updatedPost = req.body;
+  console.log(updatedPost);
+  const updateDoc = {
+    $set: {
+      status: updatedPost.status
+    },
+  };
+  const result = await buySells.updateOne(filter, updateDoc);
+  res.send(result);
+})
+app.delete('/buySell/:id', async(req, res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await buySells.deleteOne(query);
+  res.send(result);
+})
 // booking
 app.post('/bookings', async(req, res) =>{
   const addBooking = req.body;
