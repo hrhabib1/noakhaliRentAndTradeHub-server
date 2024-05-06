@@ -159,6 +159,26 @@ app.get('/createAdvertisings/:id', async(req, res) =>{
   const result = await createAdvertisings.findOne(query, options);
   res.send(result);
 })
+// advertising post controll
+app.patch('/createAdvertisings/:id', async(req, res)=> {
+  const id = req.params.id;
+  const filter = {_id: new ObjectId(id)};
+  const updatedPost = req.body;
+  console.log(updatedPost);
+  const updateDoc = {
+    $set: {
+      status: updatedPost.status
+    },
+  };
+  const result = await createAdvertisings.updateOne(filter, updateDoc);
+  res.send(result);
+})
+app.delete('/createAdvertisings/:id', async(req, res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await createAdvertisings.deleteOne(query);
+  res.send(result);
+})
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
