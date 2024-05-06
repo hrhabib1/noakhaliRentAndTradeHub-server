@@ -126,6 +126,24 @@ app.post('/bookings', async(req, res) =>{
   const result = await bookingCollection.insertOne(addBooking);
   res.send(result);
 })
+// my booking
+app.get('/bookings', async(req, res) =>{
+  let query = {};
+  if(req.query?.
+    cutomerEmail){
+    query = {
+      cutomerEmail: req.query.
+      cutomerEmail}
+  }
+  const result = await bookingCollection.find(query).toArray();
+  res.send(result);
+})
+app.delete('/bookings/:id', async(req, res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await bookingCollection.deleteOne(query);
+  res.send(result);
+})
 // order part
 app.get('/buySell/:id', async(req, res) =>{
   const id = req.params.id;
@@ -137,14 +155,31 @@ app.get('/buySell/:id', async(req, res) =>{
   const result = await buySells.findOne(query, options);
   res.send(result);
 })
-// booking
+// order
 app.post('/orders', async(req, res) =>{
   const addOrder = req.body;
   console.log(addOrder);
   const result = await orderCollection.insertOne(addOrder);
   res.send(result);
 })
-
+// my order
+app.get('/orders', async(req, res) =>{
+  let query = {};
+  if(req.query?.
+    cutomerEmail){
+    query = {
+      cutomerEmail: req.query.
+      cutomerEmail}
+  }
+  const result = await orderCollection.find(query).toArray();
+  res.send(result);
+})
+app.delete('/orders/:id', async(req, res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await orderCollection.deleteOne(query);
+  res.send(result);
+})
 
 // advertising
 app.post('/createAdvertisings', async(req, res) =>{
