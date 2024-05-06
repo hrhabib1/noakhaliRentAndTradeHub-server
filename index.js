@@ -54,7 +54,7 @@ app.get('/rentHouses/:id', async(req, res) =>{
   const id = req.params.id;
   const query = { _id: new ObjectId(id) }
   const options = {
-      projection: {title: 1, image: 1,  location: 1, price: 1, gender: 1},
+      projection: {title: 1, image: 1,  location: 1, price: 1, gender: 1, email: 1},
   };
 
   const result = await rentServices.findOne(query, options);
@@ -130,10 +130,10 @@ app.post('/bookings', async(req, res) =>{
 app.get('/bookings', async(req, res) =>{
   let query = {};
   if(req.query?.
-    cutomerEmail){
+    email){
     query = {
       cutomerEmail: req.query.
-      cutomerEmail}
+      email}
   }
   const result = await bookingCollection.find(query).toArray();
   res.send(result);
@@ -144,12 +144,37 @@ app.delete('/bookings/:id', async(req, res) =>{
   const result = await bookingCollection.deleteOne(query);
   res.send(result);
 })
+// booking controll
+app.get('/myBookings', async(req, res) =>{
+  let query = {};
+  if(req.query?.
+    email){
+    query = {
+      email: req.query.
+      email}
+  }
+  const result = await bookingCollection.find(query).toArray();
+  res.send(result);
+})
+app.patch('/bookings/:id', async(req, res)=> {
+  const id = req.params.id;
+  const filter = {_id: new ObjectId(id)};
+  const updatedPost = req.body;
+  console.log(updatedPost);
+  const updateDoc = {
+    $set: {
+      status: updatedPost.status
+    },
+  };
+  const result = await bookingCollection.updateOne(filter, updateDoc);
+  res.send(result);
+})
 // order part
 app.get('/buySell/:id', async(req, res) =>{
   const id = req.params.id;
   const query = { _id: new ObjectId(id) }
   const options = {
-      projection: {title: 1, image: 1,  location: 1, price: 1},
+      projection: {title: 1, image: 1,  location: 1, price: 1, email: 1},
   };
 
   const result = await buySells.findOne(query, options);
@@ -166,10 +191,10 @@ app.post('/orders', async(req, res) =>{
 app.get('/orders', async(req, res) =>{
   let query = {};
   if(req.query?.
-    cutomerEmail){
+    email){
     query = {
       cutomerEmail: req.query.
-      cutomerEmail}
+      email}
   }
   const result = await orderCollection.find(query).toArray();
   res.send(result);
@@ -178,6 +203,31 @@ app.delete('/orders/:id', async(req, res) =>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id)};
   const result = await orderCollection.deleteOne(query);
+  res.send(result);
+})
+// order controll
+app.get('/myOrders', async(req, res) =>{
+  let query = {};
+  if(req.query?.
+    email){
+    query = {
+      email: req.query.
+      email}
+  }
+  const result = await orderCollection.find(query).toArray();
+  res.send(result);
+})
+app.patch('/orders/:id', async(req, res)=> {
+  const id = req.params.id;
+  const filter = {_id: new ObjectId(id)};
+  const updatedPost = req.body;
+  console.log(updatedPost);
+  const updateDoc = {
+    $set: {
+      status: updatedPost.status
+    },
+  };
+  const result = await orderCollection.updateOne(filter, updateDoc);
   res.send(result);
 })
 
@@ -202,7 +252,7 @@ app.get('/createAdvertisings/:id', async(req, res) =>{
   const id = req.params.id;
   const query = { _id: new ObjectId(id) }
   const options = {
-      projection: {title: 1, image: 1,  location: 1, price: 1, gender: 1},
+      projection: {title: 1, image: 1,  location: 1, price: 1, gender: 1, email: 1},
   };
 
   const result = await createAdvertisings.findOne(query, options);
