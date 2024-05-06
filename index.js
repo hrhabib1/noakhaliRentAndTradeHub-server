@@ -35,12 +35,6 @@ const buySells = client.db('rentHouse').collection('oldGoods');
 
 const createAdvertisings = client.db('rentHouse').collection('advertising');
 
-app.get('/rentHouses', async(req, res) =>{
-  const cursor = rentServices.find();
-  const result = await cursor.toArray();
-  res.send(result);
-})
-
 app.post('/rentHouses', async(req, res) =>{
   const rentHouse = req.body;
   console.log(rentHouse);
@@ -54,11 +48,7 @@ app.post('/buySell', async(req, res) =>{
   res.send(result);
 })
 
-app.get('/buySell', async(req, res) =>{
-  const cursor = buySells.find();
-  const result = await cursor.toArray();
-  res.send(result);
-})
+
 // read renthouse
 app.get('/rentHouses/:id', async(req, res) =>{
   const id = req.params.id;
@@ -70,7 +60,7 @@ app.get('/rentHouses/:id', async(req, res) =>{
   const result = await rentServices.findOne(query, options);
   res.send(result);
 })
-// rent house post controle
+// rent house post controll
 app.patch('/rentHouses/:id', async(req, res)=> {
   const id = req.params.id;
   const filter = {_id: new ObjectId(id)};
@@ -90,6 +80,25 @@ app.delete('/rentHouses/:id', async(req, res) =>{
   const result = await rentServices.deleteOne(query);
   res.send(result);
 })
+// my rent house post
+app.get('/rentHouses', async(req, res) =>{
+  let query = {};
+  if(req.query?.email){
+    query = {email: req.query.email}
+  }
+  const result = await rentServices.find(query).toArray();
+  res.send(result);
+})
+// my buy sell post
+app.get('/buySell', async(req, res) =>{
+  let query = {};
+  if(req.query?.email){
+    query = {email: req.query.email}
+  }
+  const result = await buySells.find(query).toArray();
+  res.send(result);
+})
+
 // buy sell post control
 app.patch('/buySell/:id', async(req, res)=> {
   const id = req.params.id;
@@ -144,9 +153,14 @@ app.post('/createAdvertisings', async(req, res) =>{
   const result = await createAdvertisings.insertOne(createAdvertising);
   res.send(result);
 })
+
+// my advertising post
 app.get('/createAdvertisings', async(req, res) =>{
-  const cursor = createAdvertisings.find();
-  const result = await cursor.toArray();
+  let query = {};
+  if(req.query?.email){
+    query = {email: req.query.email}
+  }
+  const result = await createAdvertisings.find(query).toArray();
   res.send(result);
 })
 app.get('/createAdvertisings/:id', async(req, res) =>{
