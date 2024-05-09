@@ -10,10 +10,10 @@ o	My posts list, booking/order list, booking/order request list.
 Tools: React.JS, Node.js, MongoDB, Firebase, Express.js, JavaScript, React Tailwind, CSS3.
 
 
-Live Site: https://noakhalirentandtredhub.web.app\ 
+Live Site: https://noakhalirentandtredhub.web.app 
 
 Server Repo: https://github.com/hrhabib1/noakhaliRentAndTradeHub-server 
 
 Client Repo: https://github.com/hrhabib1/noakhaliRentAndTradeHub-client
 
-Admin Email: habib123@gmail.com  Pass: 123456
+Admin Email: sayefhabib123@gmail.com  Pass: 123456
